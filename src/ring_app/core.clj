@@ -38,3 +38,4 @@
 ; curl -I localhost:3000
 ; curl localhost:3000
 ; curl -H "Content-Type: application/json" -X POST -d '{"id":1}' localhost:3000
+; curl -H "Content-Type: application/edn" -X POST -d '{:id 1}' localhost:3000
