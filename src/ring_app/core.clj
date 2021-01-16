@@ -1,5 +1,6 @@
 (ns ring-app.core
-  (:require [ring.adapter.jetty :as jetty]))
+  (:require [ring.adapter.jetty :as jetty]
+            [ring.middleware.reload :refer [wrap-reload]]))
 
 (defn handler [request-map]
   {:status 200
@@ -17,6 +18,7 @@
 (defn -main []
   (jetty/run-jetty
     (-> handler
-        wrap-nocache)
+        wrap-nocache
+        wrap-reload)
     {:port 3000
      :join? false}))
