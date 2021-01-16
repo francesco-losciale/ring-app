@@ -5,7 +5,7 @@
 (defn handler [request-map]
   {:status 200
    :headers {"Content/type" "text/html"}
-   :body (str "<html><body> your IP is: "
+   :body (str "<html><body> Hello, your IP is: "
               (:remote-addr request-map)
               "</body></html>")})
 
@@ -17,8 +17,7 @@
 
 (defn -main []
   (jetty/run-jetty
-    (-> handler
-        var
+    (-> #'handler
         wrap-nocache
         wrap-reload)
     {:port 3000
