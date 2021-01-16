@@ -1,4 +1,5 @@
-(ns ring-app.core)
+(ns ring-app.core
+  (:require [ring.adapter.jetty :as jetty]))
 
 (defn handler [request-map]
   {:status 200
@@ -6,7 +7,9 @@
    :body (str "<html><body> your IP is: "
               (:remote-addr request-map)
               "</body></html>")})
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+
+(defn -main []
+  (jetty/run-jetty
+    handler
+    {:port 3000
+     :join? false}))
