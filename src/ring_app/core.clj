@@ -21,7 +21,13 @@
    ["/echo/:id"
     {:get
      (fn [{{:keys [id]} :path-params}]
-       (response/ok (str "<p>the value is: " id "</p>")))}]])
+       (response/ok (str "<p>the value is: " id "</p>")))}]
+   ["/api"
+    {:middleware [wrap-formats]}
+    ["/multiply"
+     {:post
+      (fn [{{:keys [a b]} :body-params}]
+        (response/ok {:result (* a b)}))}]]])
 
 (def handler
   (reitit/ring-handler
@@ -41,8 +47,7 @@
   (jetty/run-jetty
     (-> #'handler
         wrap-nocache
-        wrap-reload
-        wrap-formats)
+        wrap-reload)
     {:port  3000
      :join? false}))
 
