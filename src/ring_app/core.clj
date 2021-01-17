@@ -1,5 +1,5 @@
 (ns ring-app.core
-  (:require [reitit.core :as reitit]
+  (:require [reitit.ring :as reitit]
             [ring.adapter.jetty :as jetty]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.util.http-response :as response]
@@ -15,7 +15,12 @@
   (response/ok
     {:result (get-in request [:body-params :id])}))
 
-(def handler json-handler)
+(def routes
+  [["/" {:get html-handler}]])
+
+(def handler
+  (reitit/ring-handler
+    (reitit/router routes)))
 
 (defn wrap-nocache [handler]
   (fn [request]
