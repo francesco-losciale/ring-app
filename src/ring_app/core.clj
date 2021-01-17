@@ -37,6 +37,8 @@
   (reitit/routes
     (reitit/ring-handler
      (reitit/router routes))
+    (reitit/create-resource-handler
+      {:path "/resources/"})
     (reitit/create-default-handler
       {:not-found
        (constantly (response/not-found "404 - Not Found"))
@@ -63,3 +65,4 @@
 ; curl localhost:3000
 ; curl -H "Content-Type: application/json" -X POST -d '{"id":1}' localhost:3000
 ; curl -H "Content-Type: application/edn" -X POST -d '{:id 1}' localhost:3000
+; curl -X GET http://localhost:3000/resources/index.html
