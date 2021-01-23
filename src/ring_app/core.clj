@@ -35,17 +35,17 @@
 
 (def handler
   (reitit/routes
-    (reitit/ring-handler
-     (reitit/router routes))
     (reitit/create-resource-handler
       {:path "/resources/"})
-    (reitit/create-default-handler
-      {:not-found
-       (constantly (response/not-found "404 - Not Found"))
-       :method-not-allowed
-       (constantly (response/method-not-allowed "405 - Method not allowed"))
-       :not-acceptable
-       (constantly (response/not-acceptable "406 - Not acceptable"))})))
+    (reitit/ring-handler
+      (reitit/router routes)
+      (reitit/create-default-handler
+        {:not-found
+         (constantly (response/not-found "404 - Not Found"))
+         :method-not-allowed
+         (constantly (response/method-not-allowed "405 - Method not allowed"))
+         :not-acceptable
+         (constantly (response/not-acceptable "406 - Not acceptable"))}))))
 
 (defn wrap-nocache [handler]
   (fn [request]
@@ -66,3 +66,4 @@
 ; curl -H "Content-Type: application/json" -X POST -d '{"id":1}' localhost:3000
 ; curl -H "Content-Type: application/edn" -X POST -d '{:id 1}' localhost:3000
 ; curl -X GET http://localhost:3000/resources/index.html
+; curl -X POST http://localhost:3000/echo/4
